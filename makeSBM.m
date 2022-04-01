@@ -1,4 +1,4 @@
-function [SBM] = makeSBM(n,prob1, prob2, clusters)
+function [SBM] = makeSBM(n,prob1, prob2, clusters, numClusters, weighted)
 %Creates nxn Stochastic Block Matrix representing the adhacency matrix of
 %an unweighted graph
 %   n - the dimension of the Block Matrix
@@ -11,22 +11,37 @@ SBM = zeros(n,n);
 for i = 1:n
     for j = 1:n
        if i ~= j
-           r = randi(1);
+           r = randi(1,1);
+           r;
            if r < prob2
-              SBM(i,j) = 1;
+               if weighted 
+                   r2 = rand(1,1);
+                   SBM(i,j) = r2;
+               else
+                    SBM(i,j) = 1;
+               end
            end
        end
     end
 end
 start_index = 1;
-for k = 1:size(clusters)
-    end_index = start + clusters[i]; 
-    for i = start_index:end_index
-        for j = start_index:end_index
+for k = 1:numClusters
+    k;
+    end_index = start_index + clusters(k); 
+    for i = start_index:end_index-1
+        for j = start_index:end_index-1
             if i ~= j
-                r = randi(1);
+                r = rand(1,1);
+                i;
+                j;
+                r;
                 if r < prob1
-                    SBM(i,j) = 1;
+                    if weighted 
+                        r2 = rand(1,1);
+                        SBM(i,j) = r2;
+                    else
+                        SBM(i,j) = 1;
+                    end
                 else 
                     SBM(i,j) = 0;
                 end
